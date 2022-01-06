@@ -40,7 +40,7 @@ Subcommands:
 
 ~~~
 
-GPOtrail heavily relies on Bloodhounds neo4j database to lookup information and to enrich the bloodhound model. So neo4j database has to be running and contain data of the target domain. So make sure to do you SharpHound scans upfront and load the data in Bloodhound.
+GPOtrail heavily relies on Bloodhound's neo4j database to lookup information and to enrich the Bloodhound model. So the neo4j database has to be running and contain data of the target domain. So make sure to do you SharpHound scans upfront and load the data in Bloodhound.
 
 GPOtrail requires the GPO report file that was generated as follows:
 
@@ -48,7 +48,7 @@ GPOtrail requires the GPO report file that was generated as follows:
 
 ### RSOP
 
-The `rsop` mode provides a breakdown of all policy settings that are applied on the supplied computer and user (optional).
+The `rsop` mode provides a breakdown of all policy settings that are applied on the supplied computer and user (optional). To achieve that, it traverses the OU structure from the root to the target system, gets all applied GPOs, manages GPO inheritance and solves GPO conflicts. The set of policies that remain and actually are applied on the target are printed.
 
 ### Enrich
 
