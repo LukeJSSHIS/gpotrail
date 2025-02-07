@@ -118,9 +118,11 @@ def get_OU_GPOs(OU_name):
     log.logger.debug(f"[ ] Executing Bloodhound query: {query}")
     results = session.run(query)
     results = results.values()
-
     for node in results:
-        gpo_ids.append("{"+node[0]._properties["gpcpath"].split("{")[1])
+        try:
+            gpo_ids.append("{"+node[0]._properties["gpcpath"].split("{")[1])
+        except:
+            log.logger.debug(f"GPC Path not found in {node[0].element_id}")
     
     ou_gpo_cache[OU_name] = gpo_ids
     return gpo_ids
