@@ -37,14 +37,16 @@ class GPO_extension:
         return self.group_change
 
     def parse(self):
-        e = self.xml
+        e = self.xml        
         tag = e.tag.split("}")[1]
         self.tag=tag
 
         log_indent = 26
+        # print(f"tag = {tag}")
 
         if tag == "RegistrySetting":
             path = e.find("{http://www.microsoft.com/GroupPolicy/Settings/Registry}KeyPath")
+            # print(f"path = {path}")            
             if path != None:
                 path = path.text
                 command = e.find("{http://www.microsoft.com/GroupPolicy/Settings/Registry}Command")
@@ -54,11 +56,16 @@ class GPO_extension:
                     return
 
                 key = e.find("{http://www.microsoft.com/GroupPolicy/Settings/Registry}Value/{http://www.microsoft.com/GroupPolicy/Settings/Registry}Name")
-                if key != None:
+                keytext = getattr(key,'text',None)
+                if key != None and keytext !=  None:
+                    # print(f"key = {key.text}")
                     key = key.text
                     value = e.find("{http://www.microsoft.com/GroupPolicy/Settings/Registry}Value/{http://www.microsoft.com/GroupPolicy/Settings/Registry}Name").text
-                    self.fingerprint = f"RegistrySetting (key): {path+'/'+key}"
-                    self.text = f"{'RegistrySetting (key)':<{log_indent}}: {path+'/'+key}: {value}"
+                    self.fingerprint = f"RegistrySetting (key): {path}/{key}"
+                    # print(f"fingerprint = {self.fingerprint}")
+                    # print("press any key")
+                    # input()
+                    self.text = f"{'RegistrySetting (key)':<{log_indent}}: {path}/{key}: {value}"
                     return
 
                 adm = e.find("{http://www.microsoft.com/GroupPolicy/Settings/Registry}AdmSetting")
