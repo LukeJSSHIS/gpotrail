@@ -9,7 +9,7 @@ def init_logging(verbose):
         loggingLevel = logging.DEBUG
     else:
         loggingLevel = logging.INFO
-    print(f"Logging level {Logginglevel}")
+    print(f"Logging level {loggingLevel}")
     logger = logging.getLogger('gpotraillog')
     logger.setLevel(loggingLevel)
 
