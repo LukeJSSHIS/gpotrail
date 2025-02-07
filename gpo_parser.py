@@ -415,14 +415,17 @@ class GPO:
                 continue
 
             perm_type = perm.find("{http://www.microsoft.com/GroupPolicy/Types/Security}Type/{http://www.microsoft.com/GroupPolicy/Types/Security}PermissionType").text
-            trustee = perm.find("{http://www.microsoft.com/GroupPolicy/Types/Security}Trustee/{http://www.microsoft.com/GroupPolicy/Types}Name").text
-            
-            if perm_type =="Allow":
-                if not trustee.upper() in target_groups:
-                    return False
-            elif perm_type == "Deny":
-                if trustee.upper() in target_groups:
-                    return False
+            try:
+                trustee = perm.find("{http://www.microsoft.com/GroupPolicy/Types/Security}Trustee/{http://www.microsoft.com/GroupPolicy/Types}Name").text
+                if perm_type =="Allow":
+                    if not trustee.upper() in target_groups:
+                        return False
+                elif perm_type == "Deny":
+                    if trustee.upper() in target_groups:
+                        return False
+            except:
+                log.logger.error(f"Text not found in {perm}")
+
 
         return True
     
