@@ -114,7 +114,7 @@ def get_OU_GPOs(OU_name):
     if OU_name in ou_gpo_cache:
         return ou_gpo_cache[OU_name]
     gpo_ids = []
-    query = "MATCH p=(n:GPO)-[r:GpLink]->(o {name: '"+OU_name+"'}) RETURN n"
+    query = "MATCH p=(n:GPO)-[r:GPLink]->(o {name: '"+OU_name+"'}) RETURN n"
     log.logger.debug(f"[ ] Executing Bloodhound query: {query}")
     results = session.run(query)
     results = results.values()
